@@ -12,7 +12,7 @@ namespace ExtensionMethods
         {
             string someText = "Some Letters and Stuf 1 and 1 and 2";
             var z = someText.Search('1', 2);
-            var x = someText.Search("Letters");
+            var x = someText.Search("a", 3);
             var y = someText.CountString("1");
         }
     }
@@ -26,29 +26,24 @@ namespace ExtensionMethods
             int currentInst = 0;
             //if optional argument, case sensitive is false convert string and marker to lowercase
             if (!caseSensitive) { yourString = yourString.ToLower(); yourMarker = yourMarker.ToLower(); }
-            int myReturnValue = 0;
-            try
+            int myReturnValue = -1; //if nothing is found the returned integer is negative 1
+
+            while ((num + yourMarker.Length) <= yourString.Length)
             {
-                while (num < yourString.Length)
+                string testString = yourString.Substring(num, yourMarker.Length);
+
+                if (testString == yourMarker)
                 {
-                    string testString = yourString.Substring(num, yourMarker.Length);
-                   
-                    if (testString == yourMarker)
+                    currentInst++;
+                    if (currentInst == yourInst)
                     {
-                        currentInst++;
-                        if (currentInst == yourInst)
-                        {
-                            myReturnValue = num;             
-                            break;
-                        }                        
+                        myReturnValue = num;
+                        break;
                     }
-                    num++;
                 }
-            }
-            catch
-            {
-                myReturnValue = 0;
-            }
+                num++;
+            }           
+            
             return myReturnValue;
         }
 
@@ -58,7 +53,7 @@ namespace ExtensionMethods
             int num = 0;
             int currentInst = 0;
             var charArray = yourString.ToArray<char>();
-            int myReturnValue = 0;
+            int myReturnValue = -1;
             if (!caseSensitive)
             {
                 yourString = yourString.ToLower();
