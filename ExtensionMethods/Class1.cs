@@ -42,8 +42,8 @@ namespace ExtensionMethods
                     }
                 }
                 num++;
-            }           
-            
+            }
+
             return myReturnValue;
         }
 
@@ -60,7 +60,7 @@ namespace ExtensionMethods
                 yourMarker = Char.ToLower(yourMarker);
             }
             while (num <= charArray.Length)
-            {                
+            {
                 if (charArray[num] == yourMarker)
                 {
                     currentInst++;
@@ -81,6 +81,32 @@ namespace ExtensionMethods
             string newstring = yourString.Replace(yourMarker, "");
             myCnt = (yourString.Length - newstring.Length) / yourMarker.Length;
             return myCnt;
-        }   
+        }       
+        public static string RemoveDoubleSpaces(this string value)
+        {
+            int startLength = value.Length;
+            int newLength = 0;
+            while (startLength > newLength)
+            {
+                startLength = value.Length;
+                value = value.Replace("  ", " ");
+                newLength = value.Length;
+            }
+            return value;
+        }
+        public static string RemoveLineEndings(this string value)
+        {
+            if (String.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+            string lineSeparator = ((char)0x2028).ToString();
+            string paragraphSeparator = ((char)0x2029).ToString();
+
+            return value.Replace("\r\n", string.Empty).Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(lineSeparator, string.Empty).Replace(paragraphSeparator, string.Empty).Replace("\t", string.Empty);
+        }
+
     }
 }
+
+
